@@ -20,6 +20,19 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Task Board
+
+We track tasks with [Tasks.md](https://github.com/BaldissaraMatheus/Tasks.md), a kanban board where every card is a markdown file committed to this repo under `tasks/boards/` (lanes are directories, cards are `.md` files).
+
+Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker Engine on Linux).
+
+```bash
+pnpm tasks       # start the board, then open http://localhost:8338
+pnpm tasks:stop  # stop it
+```
+
+Edit cards in the UI or directly in your editor — commit them like any other file.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
