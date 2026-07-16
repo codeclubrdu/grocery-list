@@ -1,0 +1,14 @@
+services:
+  tasks:
+    image: baldissaramatheus/tasks.md:3.3.0
+    container_name: grocery-list-tasks
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TITLE=grocery-list-tasks
+    volumes:
+      - ./tasks/boards:/tasks
+      - ./tasks/config:/config
+    ports:
+      - '8338:8080'
+    restart: unless-stopped
