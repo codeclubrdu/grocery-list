@@ -16,3 +16,11 @@
 - Create form fields for adding to list
 - Checkmark button to indicate item has been put in shopping cart
 - Clear list button.  Moves all items to history and clears list
+
+2. Database connection and setup
+
+#### Need to Learn
+
+1. How to add objects to array of objects
+2. How to edit objects in array
+3. How to implement SQLite in Next.js

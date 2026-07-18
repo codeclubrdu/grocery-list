@@ -1,3 +1,8 @@
 export default function Home() {
-	return <div>Here is the grocery list app!</div>;
+	return (
+		<>
+			<h1>Grocery List</h1>
+			<p>- Brought to you by Code Club RDU</p>
+		</>
+	);
 }
