@@ -24,3 +24,5 @@
 1. How to add objects to array of objects
 2. How to edit objects in array
 3. How to implement SQLite in Next.js
+4. How State works
+5. How to make one component update another component. Also, if one is client component and other is server component.
