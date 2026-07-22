@@ -1,4 +1,5 @@
-import Form from 'next/form';
+import AddToList from '@/app/components/AddToList.jsx';
+import IntroStatement from '@/app/components/introStatement.jsx';
 
 type groceryObject = {
 	name: string;
@@ -44,52 +45,13 @@ export function ToBuyList() {
 	);
 }
 
-export function AddToList() {
-	// Need to make a function to add items to list or update list.  Ad ?? to Form action="??"
-
-	return (
-		<Form action="" className="flex flex-wrap">
-			<div className="flex flex-col p-2">
-				<label htmlFor="itemName">Item</label>
-				<input type="text" id="itemName" name="itemName" placeholder="Milk" className="border" />
-			</div>
-			<div className="flex flex-col p-2">
-				<label htmlFor="itemName">Quantity</label>
-				<input type="text" id="itemName" name="itemName" defaultValue="1" className="border" />
-			</div>
-			<div className="flex flex-col p-2">
-				<label htmlFor="itemName">Store</label>
-				<input
-					type="text"
-					id="itemName"
-					name="itemName"
-					placeholder="Wegman's"
-					className="border"
-				/>
-			</div>
-			<div className="flex flex-col p-2">
-				<label htmlFor="itemName">Section</label>
-				<input type="text" id="itemName" name="itemName" placeholder="Dairy" className="border" />
-			</div>
-			<div className="flex flex-col justify-end p-2">
-				<button type="submit" className="rounded-md border bg-gray-200 px-2">
-					Submit
-				</button>
-			</div>
-		</Form>
-	);
-}
-
 export default function Home() {
 	return (
 		<>
 			<h1 className="m-8 text-center text-4xl font-bold tracking-tight text-gray-900">
 				Grocery List
 			</h1>
-			<p className="text-center text-gray-500">
-				Brought to you by Carl&apos;s Jr. <br />
-				(and Code Club RDU)
-			</p>
+			<IntroStatement sponsor={"Carl's Jr."}></IntroStatement>
 			<ToBuyList></ToBuyList>
 			<AddToList></AddToList>
 		</>
