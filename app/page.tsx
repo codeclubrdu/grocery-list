@@ -1,4 +1,8 @@
-import Form from 'next/form';
+'use client';
+
+import { useState } from 'react';
+import AddToList from '@/app/components/AddToList.jsx';
+import IntroStatement from '@/app/components/introStatement.jsx';
 
 type groceryObject = {
 	name: string;
@@ -28,12 +32,12 @@ const groceryList: groceryObject[] = [
 	},
 ];
 
-export function ToBuyList() {
+export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
 	return (
 		<div className="m-10 flex flex-col text-center">
 			<p className="m-5 text-2xl font-bold">Buy Now:</p>
 			<ul>
-				{groceryList.map((listItem) => (
+				{listToRender.map((listItem: groceryObject) => (
 					<li
 						className="text-xl"
 						key={listItem.name}
@@ -44,54 +48,35 @@ export function ToBuyList() {
 	);
 }
 
-export function AddToList() {
-	// Need to make a function to add items to list or update list.  Ad ?? to Form action="??"
-
-	return (
-		<Form action="" className="flex flex-wrap">
-			<div className="flex flex-col p-2">
-				<label htmlFor="itemName">Item</label>
-				<input type="text" id="itemName" name="itemName" placeholder="Milk" className="border" />
-			</div>
-			<div className="flex flex-col p-2">
-				<label htmlFor="itemName">Quantity</label>
-				<input type="text" id="itemName" name="itemName" defaultValue="1" className="border" />
-			</div>
-			<div className="flex flex-col p-2">
-				<label htmlFor="itemName">Store</label>
-				<input
-					type="text"
-					id="itemName"
-					name="itemName"
-					placeholder="Wegman's"
-					className="border"
-				/>
-			</div>
-			<div className="flex flex-col p-2">
-				<label htmlFor="itemName">Section</label>
-				<input type="text" id="itemName" name="itemName" placeholder="Dairy" className="border" />
-			</div>
-			<div className="flex flex-col justify-end p-2">
-				<button type="submit" className="rounded-md border bg-gray-200 px-2">
-					Submit
-				</button>
-			</div>
-		</Form>
-	);
-}
-
 export default function Home() {
+	const [list, setList] = useState(groceryList);
+
+	function addItem(formData: FormData) {
+		const newGrocery: groceryObject = {
+			name: formData.get('itemName') as string,
+			quantity: Number(formData.get('quantity')),
+			section: formData.get('section') as string,
+			store: formData.get('store') as string,
+		};
+
+		setList([...list, newGrocery]);
+
+		// const newList = [...list, newGrocery];
+		// console.log(newList);
+		// const formValues = Object.fromEntries(formData)
+		// console.log(formValues);
+	}
+
+	console.log(list);
+
 	return (
 		<>
 			<h1 className="m-8 text-center text-4xl font-bold tracking-tight text-gray-900">
 				Grocery List
 			</h1>
-			<p className="text-center text-gray-500">
-				Brought to you by Carl&apos;s Jr. <br />
-				(and Code Club RDU)
-			</p>
-			<ToBuyList></ToBuyList>
-			<AddToList></AddToList>
+			<IntroStatement sponsor={"Carl's Jr."}></IntroStatement>
+			<ToBuyList listToRender={list}></ToBuyList>
+			<AddToList handleSubmit={addItem}></AddToList>
 		</>
 	);
 }
