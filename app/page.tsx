@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import AddToList from '@/app/components/AddToList.jsx';
 import IntroStatement from '@/app/components/introStatement.jsx';
 
@@ -29,12 +32,12 @@ const groceryList: groceryObject[] = [
 	},
 ];
 
-export function ToBuyList() {
+export function ToBuyList({ listToRender }) {
 	return (
 		<div className="m-10 flex flex-col text-center">
 			<p className="m-5 text-2xl font-bold">Buy Now:</p>
 			<ul>
-				{groceryList.map((listItem) => (
+				{listToRender.map((listItem) => (
 					<li
 						className="text-xl"
 						key={listItem.name}
@@ -46,14 +49,34 @@ export function ToBuyList() {
 }
 
 export default function Home() {
+	const [list, setList] = useState(groceryList);
+
+	function addItem(formData) {
+		const newGrocery: groceryObject = {
+			name: formData.get('itemName'),
+			quantity: formData.get('quantity'),
+			section: formData.get('section'),
+			store: formData.get('store'),
+		};
+
+		setList([...list, newGrocery]);
+
+		// const newList = [...list, newGrocery];
+		// console.log(newList);
+		// const formValues = Object.fromEntries(formData)
+		// console.log(formValues);
+	}
+
+	console.log(list);
+
 	return (
 		<>
 			<h1 className="m-8 text-center text-4xl font-bold tracking-tight text-gray-900">
 				Grocery List
 			</h1>
 			<IntroStatement sponsor={"Carl's Jr."}></IntroStatement>
-			<ToBuyList></ToBuyList>
-			<AddToList></AddToList>
+			<ToBuyList listToRender={list}></ToBuyList>
+			<AddToList handleSubmit={addItem}></AddToList>
 		</>
 	);
 }

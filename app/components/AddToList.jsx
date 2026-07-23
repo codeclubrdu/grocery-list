@@ -1,12 +1,17 @@
 import Form from 'next/form';
 
 
-export default function AddToList() {
-	// Need to make a function to add items to list or update list.  Ad ?? to Form action="??"
-    
+export default function AddToList({ handleSubmit }) {
+
+	
+
+
 
 	return (
-		<Form action="" className="flex flex-wrap">
+
+		// Passing in handleSubmit prop to trigger addItem function on form submission
+
+		<Form action={handleSubmit} className="flex flex-wrap">
 			<div className="flex flex-col p-2">
 				<label htmlFor="itemName">Item</label>
 				<input type="text" id="itemName" name="itemName" placeholder="Milk" className="border" />
