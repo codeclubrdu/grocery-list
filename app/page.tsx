@@ -32,12 +32,12 @@ const groceryList: groceryObject[] = [
 	},
 ];
 
-export function ToBuyList({ listToRender }) {
+export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
 	return (
 		<div className="m-10 flex flex-col text-center">
 			<p className="m-5 text-2xl font-bold">Buy Now:</p>
 			<ul>
-				{listToRender.map((listItem) => (
+				{listToRender.map((listItem: groceryObject) => (
 					<li
 						className="text-xl"
 						key={listItem.name}
@@ -51,12 +51,12 @@ export function ToBuyList({ listToRender }) {
 export default function Home() {
 	const [list, setList] = useState(groceryList);
 
-	function addItem(formData) {
+	function addItem(formData: FormData) {
 		const newGrocery: groceryObject = {
-			name: formData.get('itemName'),
-			quantity: formData.get('quantity'),
-			section: formData.get('section'),
-			store: formData.get('store'),
+			name: formData.get('itemName') as string,
+			quantity: Number(formData.get('quantity')),
+			section: formData.get('section') as string,
+			store: formData.get('store') as string,
 		};
 
 		setList([...list, newGrocery]);
