@@ -1,0 +1,1 @@
+Will probably actually need two buttons.  One to clear checked items and move them to history page and one to clear all of active list (maybe, but with a confirm double check prompt).

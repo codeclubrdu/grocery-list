@@ -37,7 +37,7 @@ export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
 		<div className="m-10 flex flex-col text-center">
 			<p className="m-5 text-2xl font-bold">Buy Now:</p>
 			<ul>
-				{listToRender.map((listItem: groceryObject) => (
+				{listToRender.map((listItem) => (
 					<li
 						className="text-xl"
 						key={listItem.name}
@@ -60,14 +60,7 @@ export default function Home() {
 		};
 
 		setList([...list, newGrocery]);
-
-		// const newList = [...list, newGrocery];
-		// console.log(newList);
-		// const formValues = Object.fromEntries(formData)
-		// console.log(formValues);
 	}
-
-	console.log(list);
 
 	return (
 		<>

@@ -1,0 +1,1 @@
+So people don't have 5 different ways of writing 'Food Lion'.  Maybe auto case correct form submission at least to reduce duplication.

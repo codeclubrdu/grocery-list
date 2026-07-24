@@ -1,0 +1,1 @@
+Add check boxes to active list to keep track of what you have in your cart

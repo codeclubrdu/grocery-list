@@ -1,14 +1,7 @@
 import Form from 'next/form';
 
-
 export default function AddToList({ handleSubmit }) {
-
-	
-
-
-
 	return (
-
 		// Passing in handleSubmit prop to trigger addItem function on form submission
 
 		<Form action={handleSubmit} className="flex flex-wrap">
@@ -22,13 +15,7 @@ export default function AddToList({ handleSubmit }) {
 			</div>
 			<div className="flex flex-col p-2">
 				<label htmlFor="store">Store</label>
-				<input
-					type="text"
-					id="store"
-					name="store"
-					placeholder="Wegman's"
-					className="border"
-				/>
+				<input type="text" id="store" name="store" placeholder="Wegman's" className="border" />
 			</div>
 			<div className="flex flex-col p-2">
 				<label htmlFor="section">Section</label>
