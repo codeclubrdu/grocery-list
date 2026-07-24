@@ -32,6 +32,7 @@ const groceryList: groceryObject[] = [
 	},
 ];
 
+// Component to render the list. For some reason I left it in with the main page component.
 export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
 	return (
 		<div className="m-10 flex flex-col text-center">
@@ -48,6 +49,7 @@ export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
 	);
 }
 
+// This is the actual main page component
 export default function Home() {
 	const [list, setList] = useState(groceryList);
 
