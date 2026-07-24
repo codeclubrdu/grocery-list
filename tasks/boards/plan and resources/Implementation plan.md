@@ -21,8 +21,9 @@
 
 #### Need to Learn
 
-1. How to add objects to array of objects
-2. How to edit objects in array
+1. ~~How to add objects to array of objects~~
+2. ~~How to edit objects in array~~
 3. How to implement SQLite in Next.js
-4. How State works
-5. How to make one component update another component. Also, if one is client component and other is server component.
+4. ~~How State works~~
+5. ~~How to make one component update another component. Also, if one is client component and other is server component.~~
+6. Browser local storage.  IndexedDB or that other thing that just stores key: value pairs
