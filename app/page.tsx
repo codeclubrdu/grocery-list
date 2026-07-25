@@ -32,22 +32,31 @@ const groceryList: groceryObject[] = [
 	},
 ];
 
+// Component to render the list. For some reason I left it in with the main page component.
 export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
 	return (
-		<div className="m-10 flex flex-col text-center">
-			<p className="m-5 text-2xl font-bold">Buy Now:</p>
+		<div className="m-10 flex w-fit flex-col self-center">
+			<p className="my-5 text-2xl font-bold">Buy Now:</p>
 			<ul>
-				{listToRender.map((listItem) => (
-					<li
-						className="text-xl"
-						key={listItem.name}
-					>{`${listItem.name} x ${listItem.quantity}`}</li>
-				))}
+				{listToRender.map((listItem) => {
+					let itemDisplay;
+					if (listItem.quantity > 1) {
+						itemDisplay = `${listItem.name} x ${listItem.quantity}`;
+					} else {
+						itemDisplay = `${listItem.name}`;
+					}
+					return (
+						<li className="text-xl" key={listItem.name}>
+							{itemDisplay}
+						</li>
+					);
+				})}
 			</ul>
 		</div>
 	);
 }
 
+// This is the actual main page component
 export default function Home() {
 	const [list, setList] = useState(groceryList);
 
