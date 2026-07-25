@@ -39,12 +39,28 @@ export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
 			<p className="my-5 text-2xl font-bold">Buy Now:</p>
 			<ul>
 				{listToRender.map((listItem) => {
-					let itemDisplay;
+					const itemDisplay =
+						listItem.quantity > 1 ? `${listItem.name} x ${listItem.quantity}` : `${listItem.name}`;
+
+					// I figured out 3 ways to do it.  Take that React $*%@#*!
+					/*	let itemDisplay;
 					if (listItem.quantity > 1) {
 						itemDisplay = `${listItem.name} x ${listItem.quantity}`;
 					} else {
 						itemDisplay = `${listItem.name}`;
-					}
+					} */
+
+					/* const itemDisplay = function(listItem) {
+						if (listItem.quantity > 1) {
+							return `${listItem.name} x ${listItem.quantity}`;
+						}
+						else {
+							return `${listItem.name}`;
+						}		
+					} */
+
+					// console.log(`The value of itemDisplay is ${itemDisplay}`);
+
 					return (
 						<li className="text-xl" key={listItem.name}>
 							{itemDisplay}
