@@ -38,12 +38,19 @@ export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
 		<div className="m-10 flex w-fit flex-col self-center">
 			<p className="my-5 text-2xl font-bold">Buy Now:</p>
 			<ul>
-				{listToRender.map((listItem) => (
-					<li
-						className="text-xl"
-						key={listItem.name}
-					>{`${listItem.name} x ${listItem.quantity}`}</li>
-				))}
+				{listToRender.map((listItem) => {
+					let itemDisplay;
+					if (listItem.quantity > 1) {
+						itemDisplay = `${listItem.name} x ${listItem.quantity}`;
+					} else {
+						itemDisplay = `${listItem.name}`;
+					}
+					return (
+						<li className="text-xl" key={listItem.name}>
+							{itemDisplay}
+						</li>
+					);
+				})}
 			</ul>
 		</div>
 	);
