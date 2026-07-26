@@ -34,19 +34,41 @@ const groceryList: groceryObject[] = [
 
 // Component to render the list. For some reason I left it in with the main page component.
 export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
+	// Create a list of each store with no duplicates
+	// Get an array containing only the stores
+	let storeList = listToRender.map((listItem) => listItem.store);
+	// Remove duplicates
+	storeList = storeList.filter((store, index) => storeList.indexOf(store) === index);
+
 	return (
-		<div className="m-10 flex w-fit flex-col self-center">
-			<p className="my-5 text-2xl font-bold">Buy Now:</p>
+		<div className="mb-10 flex w-fit flex-col self-center">
 			<ul>
-				{listToRender.map((listItem) => {
-					const itemDisplay =
-						listItem.quantity > 1 ? `${listItem.name} x ${listItem.quantity}` : `${listItem.name}`;
+				{storeList.map((store) => {
+					const perStoreList = listToRender.filter((grocery) => grocery.store === store);
 
 					return (
-						<li className="text-xl" key={listItem.name}>
-							<input type="checkbox" id="{listItem.name}" className="me-3 h-4 w-4"></input>
-							<label htmlFor="{listItem.name}">{itemDisplay}</label>
-						</li>
+						<div key={store}>
+							<p className="mt-8 mb-2 text-2xl font-bold">{store}</p>
+							<ul>
+								{perStoreList.map((listItem) => {
+									const itemDisplay =
+										listItem.quantity > 1
+											? `${listItem.name} x ${listItem.quantity}`
+											: `${listItem.name}`;
+
+									return (
+										<li className="flex text-xl" key={listItem.name}>
+											<input
+												type="checkbox"
+												id="{listItem.name}"
+												className="me-3 h-4 w-4 self-center"
+											></input>
+											<label htmlFor="{listItem.name}">{itemDisplay}</label>
+										</li>
+									);
+								})}
+							</ul>
+						</div>
 					);
 				})}
 			</ul>
