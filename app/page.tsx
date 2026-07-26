@@ -25,12 +25,42 @@ const groceryList: groceryObject[] = [
 		store: 'Food Lion',
 	},
 	{
+		name: 'Cheese',
+		quantity: 1,
+		section: 'dairy',
+		store: 'Food Lion',
+	},
+	{
+		name: 'Gritz',
+		quantity: 1,
+		section: 'cereal',
+		store: 'Food Lion',
+	},
+	{
+		name: 'Pickles',
+		quantity: 1,
+		section: 'contiments',
+		store: 'Food Lion',
+	},
+	{
 		name: 'Buffalo wings',
 		quantity: 3,
 		section: 'deli',
 		store: 'Wegmans',
 	},
-];
+].sort((a, b) => {
+	const sectionA = a.section.toUpperCase();
+	const sectionB = b.section.toUpperCase();
+	if (sectionA < sectionB) {
+		return -1;
+	}
+	if (sectionA > sectionB) {
+		return 1;
+	}
+	return 0;
+});
+
+console.log(groceryList);
 
 // Component to render the list. For some reason I left it in with the main page component.
 export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
