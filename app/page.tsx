@@ -11,6 +11,7 @@ type groceryObject = {
 	store: string;
 };
 
+// Initial list for development testing.  Sorted by section (code at end of array)
 const groceryList: groceryObject[] = [
 	{
 		name: 'Milk',
@@ -60,8 +61,6 @@ const groceryList: groceryObject[] = [
 	return 0;
 });
 
-console.log(groceryList);
-
 // Component to render the list. For some reason I left it in with the main page component.
 export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
 	// Create a list of each store with no duplicates
@@ -88,12 +87,19 @@ export function ToBuyList({ listToRender }: { listToRender: groceryObject[] }) {
 
 									return (
 										<li className="flex text-xl" key={listItem.name}>
-											<input
-												type="checkbox"
-												id="{listItem.name}"
-												className="me-3 h-4 w-4 self-center"
-											></input>
-											<label htmlFor="{listItem.name}">{itemDisplay}</label>
+											<div className="flex gap-x-4 sm:col-span-2">
+												<div className="flex items-center">
+													<div className="group relative inline-flex w-8 shrink-0 rounded-full bg-gray-200 p-px inset-ring inset-ring-gray-900/5 outline-offset-2 outline-indigo-600 transition-colors duration-200 ease-in-out has-checked:bg-indigo-600 has-focus-visible:outline-2">
+														<span className="size-4 rounded-full bg-white shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out group-has-checked:translate-x-3.5"></span>
+														<input
+															type="checkbox"
+															id="{listItem.name}"
+															className="absolute inset-0 size-full appearance-none focus:outline-hidden"
+														></input>
+													</div>
+												</div>
+												<label htmlFor="{listItem.name}">{itemDisplay}</label>
+											</div>
 										</li>
 									);
 								})}
