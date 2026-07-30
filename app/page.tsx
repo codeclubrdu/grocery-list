@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ChangeEventHandler } from 'react';
 import AddToList from '@/app/components/AddToList.jsx';
 import IntroStatement from '@/app/components/introStatement.jsx';
-import { Preahvihear } from 'next/font/google';
 
 type groceryObject = {
 	name: string;
@@ -53,7 +52,13 @@ const groceryList: groceryObject[] = [
 ];
 
 // Component to render the list. For some reason I left it in with the main page component.
-export function ToBuyList({ listToRender, saveChecks }: { listToRender: groceryObject[] }) {
+export function ToBuyList({
+	listToRender,
+	saveChecks,
+}: {
+	listToRender: groceryObject[];
+	saveChecks: ChangeEventHandler<HTMLInputElement>;
+}) {
 	// Create a list of each store with no duplicates
 	// Get an array containing only the stores
 	let storeList = listToRender.map((listItem) => listItem.store);
@@ -83,9 +88,9 @@ export function ToBuyList({ listToRender, saveChecks }: { listToRender: groceryO
 													<div className="group relative inline-flex w-8 shrink-0 rounded-full bg-gray-200 p-px inset-ring inset-ring-gray-900/5 outline-offset-2 outline-indigo-600 transition-colors duration-200 ease-in-out has-checked:bg-indigo-600 has-focus-visible:outline-2">
 														<span className="size-4 rounded-full bg-white shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out group-has-checked:translate-x-3.5"></span>
 														<input
+															id={listItem.name}
 															type="checkbox"
 															name={listItem.name}
-
 															onChange={saveChecks}
 															className="absolute inset-0 size-full appearance-none focus:outline-hidden"
 														></input>
@@ -146,23 +151,25 @@ export default function Home() {
 	}
 
 	// Keeping track of which checkboxes are checked
-	const [checkedList, setCheckedList] = useState({});
+	const [checkedList, setCheckedList] = useState<Record<string, boolean>>({});
 
-	function saveCheckState(e) {
+	const saveCheckState: ChangeEventHandler<HTMLInputElement> = (e) => {
 		const name = e.target.name;
 		const isChecked = e.target.checked;
 		setCheckedList((prev) => ({ ...prev, [name]: isChecked }));
-	}
+	};
 	console.log(checkedList);
 
 	// Function to delete checked items from list
 	// Dude.  Just add an isChecked property to the list items and manage through that.
 	function deleteChecks() {
+		let updatedList = list;
+
 		for (const item of list) {
 			//console.log(item);
 			if (item.name in checkedList && checkedList[item.name]) {
 				console.log(item.name);
-				const updatedList = list.filter((grocery) => grocery['name'] != item.name);
+				updatedList = updatedList.filter((grocery) => grocery['name'] != item.name);
 				console.log(updatedList);
 				setList(updatedList);
 			}
