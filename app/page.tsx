@@ -9,6 +9,7 @@ type groceryObject = {
 	quantity: number;
 	section: string;
 	store: string;
+	isChecked: boolean;
 };
 
 // Initial list for development testing.  Sorted by section (code at end of array)
@@ -18,36 +19,42 @@ const groceryList: groceryObject[] = [
 		quantity: 2,
 		section: 'dairy',
 		store: 'Wegmans',
+		isChecked: false,
 	},
 	{
 		name: "Frank's Red Hot",
 		quantity: 1,
 		section: 'contiments',
 		store: 'Food Lion',
+		isChecked: false,
 	},
 	{
 		name: 'Cheese',
 		quantity: 1,
 		section: 'dairy',
 		store: 'Food Lion',
+		isChecked: false,
 	},
 	{
 		name: 'Gritz',
 		quantity: 1,
 		section: 'cereal',
 		store: 'Food Lion',
+		isChecked: false,
 	},
 	{
 		name: 'Pickles',
 		quantity: 1,
 		section: 'contiments',
 		store: 'Food Lion',
+		isChecked: false,
 	},
 	{
 		name: 'Buffalo wings',
 		quantity: 3,
 		section: 'deli',
 		store: 'Wegmans',
+		isChecked: false,
 	},
 ];
 
@@ -68,43 +75,50 @@ export function ToBuyList({
 	return (
 		<div className="mb-10 flex w-fit flex-col self-center">
 			<ul>
-				{storeList.map((store) => {
-					const perStoreList = listToRender.filter((grocery) => grocery.store === store);
+				{
+					// For each store, list each store and for each do all the stuff below
+					storeList.map((store) => {
+						// Get list of items specific to each store
+						const perStoreList = listToRender.filter((grocery) => grocery.store === store);
 
-					return (
-						<div key={store}>
-							<p className="mt-8 mb-2 text-2xl font-bold">{store}</p>
-							<ul>
-								{perStoreList.map((listItem) => {
-									const itemDisplay =
-										listItem.quantity > 1
-											? `${listItem.name} x ${listItem.quantity}`
-											: `${listItem.name}`;
+						return (
+							<div key={store}>
+								<p className="mt-8 mb-2 text-2xl font-bold">{store}</p>
+								<ul>
+									{
+										// List items under their coresponding stores
+										perStoreList.map((listItem) => {
+											const itemDisplay =
+												listItem.quantity > 1
+													? `${listItem.name} x ${listItem.quantity}`
+													: `${listItem.name}`;
 
-									return (
-										<li className="flex text-xl" key={listItem.name}>
-											<div className="flex gap-x-4 sm:col-span-2">
-												<div className="flex items-center">
-													<div className="group relative inline-flex w-8 shrink-0 rounded-full bg-gray-200 p-px inset-ring inset-ring-gray-900/5 outline-offset-2 outline-indigo-600 transition-colors duration-200 ease-in-out has-checked:bg-indigo-600 has-focus-visible:outline-2">
-														<span className="size-4 rounded-full bg-white shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out group-has-checked:translate-x-3.5"></span>
-														<input
-															id={listItem.name}
-															type="checkbox"
-															name={listItem.name}
-															onChange={saveChecks}
-															className="absolute inset-0 size-full appearance-none focus:outline-hidden"
-														></input>
+											return (
+												<li className="flex text-xl" key={listItem.name}>
+													<div className="flex gap-x-4 sm:col-span-2">
+														<div className="flex items-center">
+															<div className="group relative inline-flex w-8 shrink-0 rounded-full bg-gray-200 p-px inset-ring inset-ring-gray-900/5 outline-offset-2 outline-indigo-600 transition-colors duration-200 ease-in-out has-checked:bg-indigo-600 has-focus-visible:outline-2">
+																<span className="size-4 rounded-full bg-white shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out group-has-checked:translate-x-3.5"></span>
+																<input
+																	id={listItem.name}
+																	type="checkbox"
+																	name={listItem.name}
+																	onChange={saveChecks}
+																	className="absolute inset-0 size-full appearance-none focus:outline-hidden"
+																></input>
+															</div>
+														</div>
+														<label htmlFor="{listItem.name}">{itemDisplay}</label>
 													</div>
-												</div>
-												<label htmlFor="{listItem.name}">{itemDisplay}</label>
-											</div>
-										</li>
-									);
-								})}
-							</ul>
-						</div>
-					);
-				})}
+												</li>
+											);
+										})
+									}
+								</ul>
+							</div>
+						);
+					})
+				}
 			</ul>
 		</div>
 	);
@@ -120,6 +134,7 @@ export default function Home() {
 			quantity: Number(formData.get('quantity')),
 			section: formData.get('section') as string,
 			store: formData.get('store') as string,
+			isChecked: false,
 		};
 
 		// set list to add new item and sort first by section then by store
@@ -151,29 +166,25 @@ export default function Home() {
 	}
 
 	// Keeping track of which checkboxes are checked
-	const [checkedList, setCheckedList] = useState<Record<string, boolean>>({});
+	// const [checkedList, setCheckedList] = useState<Record<string, boolean>>({});
 
 	const saveCheckState: ChangeEventHandler<HTMLInputElement> = (e) => {
 		const name = e.target.name;
 		const isChecked = e.target.checked;
-		setCheckedList((prev) => ({ ...prev, [name]: isChecked }));
+		const updatedList = list;
+		for (const item of updatedList) {
+			if (item.name === name) {
+				item.isChecked = isChecked;
+			}
+			setList(updatedList);
+		}
 	};
-	console.log(checkedList);
 
 	// Function to delete checked items from list
 	// Dude.  Just add an isChecked property to the list items and manage through that.
 	function deleteChecks() {
-		let updatedList = list;
-
-		for (const item of list) {
-			//console.log(item);
-			if (item.name in checkedList && checkedList[item.name]) {
-				console.log(item.name);
-				updatedList = updatedList.filter((grocery) => grocery['name'] != item.name);
-				console.log(updatedList);
-				setList(updatedList);
-			}
-		}
+		const keepList = list.filter((grocery) => !grocery.isChecked);
+		setList(keepList);
 	}
 
 	return (
