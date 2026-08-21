@@ -166,7 +166,6 @@ export default function Home() {
 	}
 
 	// Keeping track of which checkboxes are checked
-	// const [checkedList, setCheckedList] = useState<Record<string, boolean>>({});
 
 	const saveCheckState: ChangeEventHandler<HTMLInputElement> = (e) => {
 		const name = e.target.name;
@@ -181,7 +180,6 @@ export default function Home() {
 	};
 
 	// Function to delete checked items from list
-	// Dude.  Just add an isChecked property to the list items and manage through that.
 	function deleteChecks() {
 		const keepList = list.filter((grocery) => !grocery.isChecked);
 		setList(keepList);
