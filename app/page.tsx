@@ -3,6 +3,9 @@
 import { useState, type ChangeEventHandler } from 'react';
 import AddToList from '@/app/components/AddToList.jsx';
 import IntroStatement from '@/app/components/introStatement.jsx';
+import { fullList } from '@/app/components/TursoAuth';
+
+console.log(fullList());
 
 type groceryObject = {
 	name: string;
