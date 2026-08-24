@@ -1,6 +1,14 @@
 'use server';
 
-import { connect, Statement } from '@tursodatabase/serverless';
+import { connect } from '@tursodatabase/serverless';
+
+type groceryObject = {
+	name: string;
+	quantity: number;
+	section: string;
+	store: string;
+	isChecked: boolean;
+};
 
 const databaseUrl = process.env.TURSO_DATABASE_URL;
 if (!databaseUrl) {
