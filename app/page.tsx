@@ -1,11 +1,9 @@
 'use client';
 
-import { useState, type ChangeEventHandler } from 'react';
+import { useState, useEffect, type ChangeEventHandler } from 'react';
 import AddToList from '@/app/components/AddToList.jsx';
 import IntroStatement from '@/app/components/introStatement.jsx';
-import { fullList } from '@/app/components/TursoAuth';
-
-console.log(fullList());
+import { addToDB, fullList } from '@/app/components/TursoAuth';
 
 type groceryObject = {
 	name: string;
@@ -131,7 +129,7 @@ export function ToBuyList({
 export default function Home() {
 	const [list, setList] = useState(groceryList);
 
-	function addItem(formData: FormData) {
+	async function addItem(formData: FormData) {
 		const newGrocery: groceryObject = {
 			name: formData.get('itemName') as string,
 			quantity: Number(formData.get('quantity')),
@@ -139,6 +137,9 @@ export default function Home() {
 			store: formData.get('store') as string,
 			isChecked: false,
 		};
+
+		console.log(newGrocery);
+		await addToDB(newGrocery);
 
 		// set list to add new item and sort first by section then by store
 		setList(
@@ -167,6 +168,18 @@ export default function Home() {
 				}),
 		);
 	}
+
+	useEffect(() => {
+		async function loadGroceries() {
+			const groceryDB = await fullList();
+			console.log(groceryDB);
+			console.log(groceryDB[0]);
+			console.log(groceryDB[0].name);
+			setList(groceryDB);
+		}
+
+		void loadGroceries();
+	}, []);
 
 	// Keeping track of which checkboxes are checked
 

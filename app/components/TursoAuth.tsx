@@ -1,6 +1,6 @@
 'use server';
 
-import { connect } from '@tursodatabase/serverless';
+import { connect, Statement } from '@tursodatabase/serverless';
 
 const databaseUrl = process.env.TURSO_DATABASE_URL;
 if (!databaseUrl) {
@@ -16,7 +16,17 @@ export async function fullList() {
 	const selectAll = await conn.prepare('SELECT * FROM grocerylist');
 	const selectRows = await selectAll.all();
 
-	console.log(selectRows);
-
 	return selectRows;
+}
+
+export async function addToDB(groceryObject: groceryObject) {
+	const { name, quantity, section, store, isChecked } = groceryObject;
+
+	const addObject = await conn.prepare(
+		'INSERT INTO grocerylist (name, quantity, section, store, ischecked) VALUES (?, ?, ?, ?, ?)',
+	);
+
+	const result = await addObject.run([name, quantity, section, store, isChecked]);
+
+	return result;
 }
