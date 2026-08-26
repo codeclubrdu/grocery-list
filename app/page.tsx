@@ -3,7 +3,7 @@
 import { useState, useEffect, type ChangeEventHandler } from 'react';
 import AddToList from '@/app/components/AddToList.jsx';
 import IntroStatement from '@/app/components/introStatement.jsx';
-import { addToDB, fullList } from '@/app/components/TursoAuth';
+import { addToDB, deleteFromDB, fullList } from '@/app/components/TursoAuth';
 
 type groceryObject = {
 	name: string;
@@ -14,50 +14,7 @@ type groceryObject = {
 };
 
 // Initial list for development testing.  Sorted by section (code at end of array)
-const groceryList: groceryObject[] = [
-	{
-		name: 'Milk',
-		quantity: 2,
-		section: 'dairy',
-		store: 'Wegmans',
-		isChecked: false,
-	},
-	{
-		name: "Frank's Red Hot",
-		quantity: 1,
-		section: 'contiments',
-		store: 'Food Lion',
-		isChecked: false,
-	},
-	{
-		name: 'Cheese',
-		quantity: 1,
-		section: 'dairy',
-		store: 'Food Lion',
-		isChecked: false,
-	},
-	{
-		name: 'Gritz',
-		quantity: 1,
-		section: 'cereal',
-		store: 'Food Lion',
-		isChecked: false,
-	},
-	{
-		name: 'Pickles',
-		quantity: 1,
-		section: 'contiments',
-		store: 'Food Lion',
-		isChecked: false,
-	},
-	{
-		name: 'Buffalo wings',
-		quantity: 3,
-		section: 'deli',
-		store: 'Wegmans',
-		isChecked: false,
-	},
-];
+const groceryList: groceryObject[] = [];
 
 // Component to render the list. For some reason I left it in with the main page component.
 export function ToBuyList({
@@ -196,9 +153,14 @@ export default function Home() {
 	};
 
 	// Function to delete checked items from list
-	function deleteChecks() {
+	async function deleteChecks() {
 		const keepList = list.filter((grocery) => !grocery.isChecked);
 		setList(keepList);
+
+		const deleteList = list.filter((grocery) => grocery.isChecked);
+		console.log(deleteList);
+
+		await deleteFromDB(deleteList);
 	}
 
 	return (

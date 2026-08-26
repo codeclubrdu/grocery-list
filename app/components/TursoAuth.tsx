@@ -33,8 +33,14 @@ export async function addToDB(groceryObject: groceryObject) {
 	const addObject = await conn.prepare(
 		'INSERT INTO grocerylist (name, quantity, section, store, ischecked) VALUES (?, ?, ?, ?, ?)',
 	);
-
 	const result = await addObject.run([name, quantity, section, store, isChecked]);
 
 	return result;
+}
+
+export async function deleteFromDB(groceryObjects: groceryObject[]) {
+	for (const grocery of groceryObjects) {
+		const deleteObject = await conn.prepare('DELETE FROM grocerylist WHERE name = (?)');
+		await deleteObject.run([grocery.name]);
+	}
 }
