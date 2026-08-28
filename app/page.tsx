@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, type ChangeEventHandler } from 'react';
+import { useState, useEffect, type ChangeEvent, type ChangeEventHandler } from 'react';
 import AddToList from '@/app/components/AddToList.jsx';
 import IntroStatement from '@/app/components/introStatement.jsx';
-import { addToDB, deleteFromDB, fullList } from '@/app/components/TursoAuth';
+import { addToDB, deleteFromDB, checkDB, fullList } from '@/app/components/TursoAuth';
 
 type groceryObject = {
 	name: string;
@@ -51,6 +51,10 @@ export function ToBuyList({
 													? `${listItem.name} x ${listItem.quantity}`
 													: `${listItem.name}`;
 
+											const preCheck = listItem.isChecked ? true : false;
+
+											//console.log(preCheck);
+
 											return (
 												<li className="flex text-xl" key={listItem.name}>
 													<div className="flex gap-x-4 sm:col-span-2">
@@ -60,6 +64,7 @@ export function ToBuyList({
 																<input
 																	id={listItem.name}
 																	type="checkbox"
+																	checked={preCheck}
 																	name={listItem.name}
 																	onChange={saveChecks}
 																	className="absolute inset-0 size-full appearance-none focus:outline-hidden"
@@ -130,8 +135,6 @@ export default function Home() {
 		async function loadGroceries() {
 			const groceryDB = await fullList();
 			console.log(groceryDB);
-			console.log(groceryDB[0]);
-			console.log(groceryDB[0].name);
 			setList(groceryDB);
 		}
 
@@ -140,17 +143,23 @@ export default function Home() {
 
 	// Keeping track of which checkboxes are checked
 
-	const saveCheckState: ChangeEventHandler<HTMLInputElement> = (e) => {
+	async function saveCheckState(e: ChangeEvent<HTMLInputElement>) {
 		const name = e.target.name;
 		const isChecked = e.target.checked;
-		const updatedList = list;
-		for (const item of updatedList) {
+		const updatedList = list.map((item) => {
 			if (item.name === name) {
-				item.isChecked = isChecked;
+				return {
+					...item,
+					isChecked: isChecked,
+				};
 			}
-			setList(updatedList);
-		}
-	};
+			return item;
+		});
+
+		setList(updatedList);
+		//console.log(updatedList);
+		await checkDB(name, isChecked);
+	}
 
 	// Function to delete checked items from list
 	async function deleteChecks() {
@@ -158,7 +167,7 @@ export default function Home() {
 		setList(keepList);
 
 		const deleteList = list.filter((grocery) => grocery.isChecked);
-		console.log(deleteList);
+		//console.log(deleteList);
 
 		await deleteFromDB(deleteList);
 	}
