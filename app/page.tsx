@@ -2,7 +2,7 @@
 
 import { useState, useEffect, type ChangeEvent, type ChangeEventHandler } from 'react';
 import AddToList from '@/app/components/AddToList.jsx';
-import IntroStatement from '@/app/components/introStatement.jsx';
+import IntroStatement from '@/app/components/IntroStatement.jsx';
 import { addToDB, deleteFromDB, checkDB, fullList } from '@/app/components/TursoAuth';
 
 type groceryObject = {
@@ -53,8 +53,6 @@ export function ToBuyList({
 
 											const preCheck = listItem.isChecked ? true : false;
 
-											//console.log(preCheck);
-
 											return (
 												<li className="flex text-xl" key={listItem.name}>
 													<div className="flex gap-x-4 sm:col-span-2">
@@ -104,38 +102,38 @@ export default function Home() {
 		await addToDB(newGrocery);
 
 		// set list to add new item and sort first by section then by store
-		setList(
-			[...list, newGrocery]
-				.sort((a, b) => {
-					const sectionA = a.section.toUpperCase();
-					const sectionB = b.section.toUpperCase();
-					if (sectionA < sectionB) {
-						return -1;
-					}
-					if (sectionA > sectionB) {
-						return 1;
-					}
-					return 0;
-				})
-				.sort((a, b) => {
-					const storeA = a.store.toUpperCase();
-					const storeB = b.store.toUpperCase();
-					if (storeA < storeB) {
-						return -1;
-					}
-					if (storeA > storeB) {
-						return 1;
-					}
-					return 0;
-				}),
-		);
+		setList([...list, newGrocery]);
 	}
 
 	useEffect(() => {
 		async function loadGroceries() {
 			const groceryDB = await fullList();
 			console.log(groceryDB);
-			setList(groceryDB);
+			setList(
+				groceryDB
+					.sort((a, b) => {
+						const sectionA = a.section.toUpperCase();
+						const sectionB = b.section.toUpperCase();
+						if (sectionA < sectionB) {
+							return -1;
+						}
+						if (sectionA > sectionB) {
+							return 1;
+						}
+						return 0;
+					})
+					.sort((a, b) => {
+						const storeA = a.store.toUpperCase();
+						const storeB = b.store.toUpperCase();
+						if (storeA < storeB) {
+							return -1;
+						}
+						if (storeA > storeB) {
+							return 1;
+						}
+						return 0;
+					}),
+			);
 		}
 
 		void loadGroceries();
@@ -153,6 +151,7 @@ export default function Home() {
 					isChecked: isChecked,
 				};
 			}
+
 			return item;
 		});
 

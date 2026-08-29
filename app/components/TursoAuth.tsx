@@ -28,9 +28,16 @@ export async function fullList() {
 	const selectAll = await conn.prepare('SELECT * FROM grocerylist');
 	const selectRows = await selectAll.all();
 
-	console.log(selectRows);
+	const boolCorrectedRows = selectRows.map((row) => {
+		if (row.isChecked === 1) {
+			row.isChecked = true;
+		} else {
+			row.isChecked = false;
+		}
+		return row;
+	});
 
-	return selectRows;
+	return boolCorrectedRows;
 }
 
 export async function addToDB(groceryObject: groceryObject) {

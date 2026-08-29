@@ -8,7 +8,7 @@ export default function AddToList({ handleSubmit, removeChecks }) {
 			<Form action={handleSubmit} className="flex flex-wrap w-full max-w-2xl mx-auto">
 				<div className="flex flex-col p-2">
 					<label htmlFor="itemName">Item</label>
-					<input type="text" id="itemName" name="itemName" placeholder="Milk" className="border p-1 rounded-lg" />
+					<input type="text" required id="itemName" name="itemName" placeholder="Milk" className="border p-1 rounded-lg" />
 				</div>
 				<div className="flex flex-col p-2">
 					<label htmlFor="quantity">Quantity</label>
@@ -16,7 +16,7 @@ export default function AddToList({ handleSubmit, removeChecks }) {
 				</div>
 				<div className="flex flex-col p-2">
 					<label htmlFor="store">Store</label>
-					<input type="text" id="store" name="store" placeholder="Wegman's" className="border p-1 rounded-lg" />
+					<input type="text" id="store" name="store" placeholder="Wegman's" defaultValue="Food Lion" className="border p-1 rounded-lg" />
 				</div>
 				<div className="flex flex-col p-2">
 					<label htmlFor="section">Section</label>
