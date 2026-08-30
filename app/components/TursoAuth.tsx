@@ -57,8 +57,6 @@ export async function deleteFromDB(groceryObjects: groceryObject[]) {
 }
 
 export async function checkDB(checkedItem: string, checkState: boolean) {
-	console.log(checkedItem, checkState);
-
 	if (checkState === true) {
 		const checkObject = await conn.prepare('UPDATE grocerylist SET isChecked = 1 WHERE name = (?)');
 		await checkObject.run([checkedItem]);

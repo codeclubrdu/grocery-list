@@ -108,7 +108,6 @@ export default function Home() {
 	useEffect(() => {
 		async function loadGroceries() {
 			const groceryDB = await fullList();
-			console.log(groceryDB);
 			setList(
 				groceryDB
 					.sort((a, b) => {
