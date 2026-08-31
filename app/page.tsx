@@ -88,6 +88,7 @@ export function ToBuyList({
 // This is the actual main page component
 export default function Home() {
 	const [list, setList] = useState(groceryList);
+	const [warning, setWarning] = useState('');
 
 	async function addItem(formData: FormData) {
 		const newGrocery: groceryObject = {
@@ -98,11 +99,10 @@ export default function Home() {
 			isChecked: false,
 		};
 
-		const warnLabel = document.getElementById('warner');
 		if (!newGrocery.name) {
-			warnLabel.innerHTML = 'Please add an item!';
+			setWarning('Please add an item!');
 			setTimeout(() => {
-				warnLabel.innerHTML = '';
+				setWarning('');
 			}, 5000);
 			return;
 		} else {
@@ -186,7 +186,7 @@ export default function Home() {
 			</h1>
 			<IntroStatement sponsor={"Carl's Jr."}></IntroStatement>
 			<ToBuyList listToRender={list} saveChecks={saveCheckState}></ToBuyList>
-			<AddToList handleSubmit={addItem} removeChecks={deleteChecks}></AddToList>
+			<AddToList handleSubmit={addItem} removeChecks={deleteChecks} warning={warning}></AddToList>
 		</>
 	);
 }
