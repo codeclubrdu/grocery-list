@@ -98,11 +98,20 @@ export default function Home() {
 			isChecked: false,
 		};
 
-		console.log(newGrocery);
-		await addToDB(newGrocery);
+		const warnLabel = document.getElementById('warner');
+		if (!newGrocery.name) {
+			warnLabel.innerHTML = 'Please add an item!';
+			setTimeout(() => {
+				warnLabel.innerHTML = '';
+			}, 5000);
+			return;
+		} else {
+			console.log(newGrocery.name);
+			await addToDB(newGrocery);
 
-		// set list to add new item and sort first by section then by store
-		setList([...list, newGrocery]);
+			// set list to add new item and sort first by section then by store
+			setList([...list, newGrocery]);
+		}
 	}
 
 	useEffect(() => {

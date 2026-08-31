@@ -3,12 +3,13 @@ import Form from 'next/form';
 export default function AddToList({ handleSubmit, removeChecks }) {
 	return (
 		// Passing in handleSubmit prop to trigger addItem function on form submission
-
+		
 		<div className="flex flex-row flex-wrap">
+			<div id="warner" className="text-red-500 flex flex-wrap w-full max-w-2xl mx-auto px-2"></div>
 			<Form action={handleSubmit} className="flex flex-wrap w-full max-w-2xl mx-auto">
 				<div className="flex flex-col p-2">
 					<label htmlFor="itemName">Item</label>
-					<input type="text" required id="itemName" name="itemName" placeholder="Milk" className="border p-1 rounded-lg" />
+					<input type="text" id="itemName" name="itemName" placeholder="Milk" className="border p-1 rounded-lg" />
 				</div>
 				<div className="flex flex-col p-2">
 					<label htmlFor="quantity">Quantity</label>
