@@ -1,14 +1,7 @@
 'use server';
 
 import { connect } from '@tursodatabase/serverless';
-
-type groceryObject = {
-	name: string;
-	quantity: number;
-	section: string;
-	store: string;
-	isChecked: boolean;
-};
+import { type groceryObject } from '@/app/components/TypeDefinitions';
 
 const databaseUrl = process.env.TURSO_DATABASE_URL;
 const token = process.env.TURSO_AUTH_TOKEN;
