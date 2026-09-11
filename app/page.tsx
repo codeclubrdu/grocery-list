@@ -5,8 +5,12 @@ import { useRouter } from 'next/navigation';
 
 export default function LogIn() {
 	const router = useRouter();
-	// Move this into Home component? and pass in via prop to this function?  Then I can get the userName over to the database through that?
-	// Need to pass username into fullList function and receive on TursoAuth module to use in SQL query.  Need to add username field to db.  Also, why does it go to different page when I hit back button?
+
+	// Need to first add a logout button on main-list page.
+	// if (localStorage.get) {
+	//     router.push('/main-list');
+	// }
+
 	async function getUserName(formData: FormData) {
 		const userName = formData.get('userName');
 		console.log(userName);
