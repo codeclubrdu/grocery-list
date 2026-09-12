@@ -3,10 +3,12 @@ import Form from 'next/form';
 export default function AddToList({
 	handleSubmit,
 	removeChecks,
+	logOut,
 	warning,
 }: {
 	handleSubmit: (formData: FormData) => Promise<void>;
 	removeChecks: () => Promise<void>;
+	logOut: () => void;
 	warning: string;
 }) {
 	return (
@@ -70,6 +72,11 @@ export default function AddToList({
 						className="rounded-lg border bg-gray-200 p-1"
 					>
 						Clear Checked Items
+					</button>
+				</div>
+				<div className="flex flex-col justify-end p-2">
+					<button formAction={logOut} type="submit" className="rounded-lg border bg-gray-200 p-1">
+						Log Out
 					</button>
 				</div>
 			</Form>

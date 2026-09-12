@@ -6,20 +6,16 @@ import { useRouter } from 'next/navigation';
 export default function LogIn() {
 	const router = useRouter();
 
-	// Need to first add a logout button on main-list page.
-	// if (localStorage.get) {
-	//     router.push('/main-list');
-	// }
-
 	async function getUserName(formData: FormData) {
 		const userName = formData.get('userName');
 		console.log(userName);
 
-		if (typeof userName !== 'string') {
+		if (typeof userName !== 'string' || !userName.trim()) {
 			return;
 		}
 
-		localStorage.setItem('userName', userName);
+		document.cookie = `userName=${userName.trim()}; path=/; SameSite=Lax; Secure`;
+
 		router.push('/main-list');
 	}
 

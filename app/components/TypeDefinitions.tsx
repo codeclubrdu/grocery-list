@@ -4,4 +4,5 @@ export type groceryObject = {
 	section: string;
 	store: string;
 	isChecked: boolean;
+	userName: string;
 };

@@ -17,9 +17,9 @@ const conn = connect({
 	authToken: token,
 });
 
-export async function fullList() {
-	const selectAll = await conn.prepare('SELECT * FROM grocerylist');
-	const selectRows = await selectAll.all();
+export async function fullList(userName: string) {
+	const selectAll = await conn.prepare('SELECT * FROM grocerylist WHERE username = (?)');
+	const selectRows = await selectAll.all([userName]);
 
 	const boolCorrectedRows = selectRows.map((row) => {
 		if (row.isChecked === 1) {
@@ -34,12 +34,12 @@ export async function fullList() {
 }
 
 export async function addToDB(groceryObject: groceryObject) {
-	const { name, quantity, section, store, isChecked } = groceryObject;
+	const { name, quantity, section, store, isChecked, userName } = groceryObject;
 
 	const addObject = await conn.prepare(
-		'INSERT INTO grocerylist (name, quantity, section, store, ischecked) VALUES (?, ?, ?, ?, ?)',
+		'INSERT INTO grocerylist (name, quantity, section, store, ischecked, username) VALUES (?, ?, ?, ?, ?, ?)',
 	);
-	await addObject.run([name, quantity, section, store, isChecked]);
+	await addObject.run([name, quantity, section, store, isChecked, userName]);
 }
 
 export async function deleteFromDB(groceryObjects: groceryObject[]) {

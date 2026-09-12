@@ -1,8 +1,17 @@
 import Home from '@/app/components/Home';
 import { fullList } from '@/app/components/TursoAuth';
+import { cookies } from 'next/headers';
 
 export default async function Page() {
-	const groceryDB = await fullList();
+	const cookieStore = await cookies();
+	const userName: string | undefined = cookieStore.get('userName')?.value;
+	console.log(userName);
+
+	if (!userName) {
+		throw new Error('No userName cookie!');
+	}
+
+	const groceryDB = await fullList(userName);
 	const initialList = groceryDB
 		.sort((a, b) => {
 			const sectionA = a.section.toUpperCase();
@@ -27,5 +36,5 @@ export default async function Page() {
 			return 0;
 		});
 
-	return <Home initialList={initialList}></Home>;
+	return <Home initialList={initialList} userName={userName}></Home>;
 }

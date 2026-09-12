@@ -8,7 +8,13 @@ import { addToDB, deleteFromDB, checkDB } from '@/app/components/TursoAuth';
 import { type groceryObject } from '@/app/components/TypeDefinitions';
 
 // This is the actual main page component
-export default function Home({ initialList }: { initialList: groceryObject[] }) {
+export default function Home({
+	initialList,
+	userName,
+}: {
+	initialList: groceryObject[];
+	userName: string;
+}) {
 	const [list, setList] = useState<groceryObject[]>(initialList);
 	const [warning, setWarning] = useState('');
 
@@ -19,6 +25,7 @@ export default function Home({ initialList }: { initialList: groceryObject[] }) 
 			section: formData.get('section') as string,
 			store: formData.get('store') as string,
 			isChecked: false,
+			userName: userName,
 		};
 
 		if (!newGrocery.name) {
@@ -28,7 +35,6 @@ export default function Home({ initialList }: { initialList: groceryObject[] }) 
 			}, 5000);
 			return;
 		} else {
-			console.log(newGrocery.name);
 			await addToDB(newGrocery);
 
 			// set list to add new item and sort first by section then by store
@@ -65,6 +71,11 @@ export default function Home({ initialList }: { initialList: groceryObject[] }) 
 		await deleteFromDB(deleteList);
 	}
 
+	function logOut() {
+		document.cookie = 'userName=; Path=/; Max-Age=0;';
+		window.location.replace('/');
+	}
+
 	return (
 		<>
 			<h1 className="m-8 text-center text-4xl font-bold tracking-tight text-gray-900">
@@ -72,7 +83,12 @@ export default function Home({ initialList }: { initialList: groceryObject[] }) 
 			</h1>
 			<IntroStatement sponsor={"Carl's Jr."}></IntroStatement>
 			<ToBuyList listToRender={list} saveChecks={saveCheckState}></ToBuyList>
-			<AddToList handleSubmit={addItem} removeChecks={deleteChecks} warning={warning}></AddToList>
+			<AddToList
+				handleSubmit={addItem}
+				removeChecks={deleteChecks}
+				logOut={logOut}
+				warning={warning}
+			></AddToList>
 		</>
 	);
 }
