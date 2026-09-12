@@ -17,6 +17,7 @@ const conn = connect({
 	authToken: token,
 });
 
+// Functions for grocerylist table
 export async function fullList(userName: string) {
 	const selectAll = await conn.prepare('SELECT * FROM grocerylist WHERE username = (?)');
 	const selectRows = await selectAll.all([userName]);
@@ -58,3 +59,5 @@ export async function checkDB(checkedItem: string, checkState: boolean) {
 		await checkObject.run([checkedItem]);
 	}
 }
+
+// Functions for groceryhistory table

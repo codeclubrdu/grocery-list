@@ -36,8 +36,6 @@ export default function Home({
 			return;
 		} else {
 			await addToDB(newGrocery);
-
-			// set list to add new item and sort first by section then by store
 			setList([...list, newGrocery]);
 		}
 	}
