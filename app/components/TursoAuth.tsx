@@ -62,12 +62,12 @@ export async function fullList(userName: string, activeStatus: number) {
 }
 
 export async function addToDB(groceryObject: groceryObject) {
-	const { name, quantity, section, store, isChecked, userName } = groceryObject;
+	const { name, quantity, section, store, isChecked, userName, active } = groceryObject;
 
 	const addObject = await conn.prepare(
-		'INSERT INTO grocerylist (name, quantity, section, store, ischecked, username) VALUES (?, ?, ?, ?, ?, ?)',
+		'INSERT INTO grocerylist (name, quantity, section, store, ischecked, username, active) VALUES (?, ?, ?, ?, ?, ?, ?)',
 	);
-	await addObject.run([name, quantity, section, store, isChecked, userName]);
+	await addObject.run([name, quantity, section, store, isChecked, userName, active]);
 }
 
 export async function deleteFromDB(groceryObjects: groceryObject[]) {
@@ -89,12 +89,9 @@ export async function checkDB(checkedItem: string, checkState: boolean) {
 
 export async function setActiveStateDB(groceryObjects: groceryObject[]) {
 	for (const grocery of groceryObjects) {
-		if (grocery.active === 1) {
-			const statement = await conn.prepare('UPDATE grocerylist SET active = 1 WHERE name = (?)');
-			await statement.run([grocery.name]);
-		} else if (grocery.active === 0) {
-			const statement = await conn.prepare('UPDATE grocerylist SET active = 0 WHERE name = (?)');
-			await statement.run([grocery.name]);
+		if (grocery.active === 1 || grocery.active === 0) {
+			const statement = await conn.prepare('UPDATE grocerylist SET active = ? WHERE name = ?');
+			await statement.run([grocery.active, grocery.name]);
 		}
 	}
 }
@@ -111,8 +108,3 @@ export async function getUser() {
 
 	return userName;
 }
-
-//export async function logOut() {
-//		document.cookie = 'userName=; Path=/; Max-Age=0;';
-//		window.location.replace('/');
-//	}

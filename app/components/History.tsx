@@ -3,7 +3,7 @@ import ToBuyList from '@/app/components/ToBuyList';
 import ManageHistory from '@/app/components/ManageHistory';
 import { type groceryObject } from '@/app/components/TypeDefinitions';
 import { useState, type ChangeEvent } from 'react';
-import { checkDB, deleteFromDB } from '@/app/components/TursoAuth';
+import { checkDB, deleteFromDB, setActiveStateDB } from '@/app/components/TursoAuth';
 
 export default function History({ initialList }: { initialList: groceryObject[] }) {
 	const [historyList, setHistoryList] = useState<groceryObject[]>(initialList);
@@ -28,7 +28,30 @@ export default function History({ initialList }: { initialList: groceryObject[] 
 	}
 
 	// *** PLACEHOLDER FOR: Need functon to set checked items active status to active (which will move them to active list)
-	async function moveToActive() {}
+	async function moveToActive() {
+		const keepList = historyList.filter((grocery) => !grocery.isChecked);
+		setHistoryList(keepList);
+
+		const moveList = historyList.filter((grocery) => grocery.isChecked);
+
+		// Inactivating tasks and unchecking to give to DB update functions.
+		const updatedMoveList = moveList.map((item) => {
+			if (item.isChecked) {
+				return {
+					...item,
+					isChecked: false,
+					active: 1,
+				};
+			}
+			return item;
+		});
+
+		for (const item of updatedMoveList) {
+			await checkDB(item.name, item.isChecked);
+		}
+
+		await setActiveStateDB(updatedMoveList);
+	}
 
 	// Function to delete checked items from list
 	async function deleteChecks() {
@@ -54,7 +77,7 @@ export default function History({ initialList }: { initialList: groceryObject[] 
 			<ManageHistory
 				removeChecks={deleteChecks}
 				logOut={logOut}
-				handleSubmit={moveToActive}
+				setActive={moveToActive}
 			></ManageHistory>
 		</>
 	);

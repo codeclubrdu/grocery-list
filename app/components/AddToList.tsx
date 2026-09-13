@@ -77,7 +77,7 @@ export default function AddToList({
 				</div>
 				<div className="flex flex-col justify-end p-2">
 					<Link href="/history" className="rounded-lg border bg-gray-200 p-1">
-						To History Page
+						Go to History Page
 					</Link>
 				</div>
 				<div className="flex flex-col justify-end p-2">
