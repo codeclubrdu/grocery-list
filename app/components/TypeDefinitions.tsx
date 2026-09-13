@@ -5,4 +5,5 @@ export type groceryObject = {
 	store: string;
 	isChecked: boolean;
 	userName: string;
+	active: number;
 };

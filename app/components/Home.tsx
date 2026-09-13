@@ -4,7 +4,7 @@ import { useState, type ChangeEvent } from 'react';
 import AddToList from '@/app/components/AddToList';
 import IntroStatement from '@/app/components/IntroStatement';
 import ToBuyList from '@/app/components/ToBuyList';
-import { addToDB, deleteFromDB, checkDB } from '@/app/components/TursoAuth';
+import { addToDB, checkDB, setActiveStateDB } from '@/app/components/TursoAuth';
 import { type groceryObject } from '@/app/components/TypeDefinitions';
 
 // This is the actual main page component
@@ -26,6 +26,7 @@ export default function Home({
 			store: formData.get('store') as string,
 			isChecked: false,
 			userName: userName,
+			active: 1,
 		};
 
 		if (!newGrocery.name) {
@@ -61,13 +62,29 @@ export default function Home({
 
 	// Need to change this to function to change active to 0.
 	// Then make a function to change active to 1 on history side called "move to 'to buy' list"
-	async function deleteChecks() {
+	async function moveToHistory() {
 		const keepList = list.filter((grocery) => !grocery.isChecked);
 		setList(keepList);
 
-		const deleteList = list.filter((grocery) => grocery.isChecked);
+		const moveList = list.filter((grocery) => grocery.isChecked);
 
-		await deleteFromDB(deleteList);
+		// Inactivating tasks and unchecking to give to DB update functions.
+		const updatedMoveList = moveList.map((item) => {
+			if (item.isChecked) {
+				return {
+					...item,
+					isChecked: false,
+					active: 0,
+				};
+			}
+			return item;
+		});
+
+		for (const item of updatedMoveList) {
+			await checkDB(item.name, item.isChecked);
+		}
+
+		await setActiveStateDB(updatedMoveList);
 	}
 
 	function logOut() {
@@ -84,7 +101,7 @@ export default function Home({
 			<ToBuyList listToRender={list} saveChecks={saveCheckState}></ToBuyList>
 			<AddToList
 				handleSubmit={addItem}
-				removeChecks={deleteChecks}
+				moveChecks={moveToHistory}
 				logOut={logOut}
 				warning={warning}
 			></AddToList>

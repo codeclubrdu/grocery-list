@@ -47,6 +47,9 @@ export default function History({ initialList }: { initialList: groceryObject[] 
 
 	return (
 		<>
+			<h1 className="m-8 text-center text-4xl font-bold tracking-tight text-gray-900">
+				Purchase History
+			</h1>
 			<ToBuyList listToRender={historyList} saveChecks={saveCheckState}></ToBuyList>
 			<ManageHistory
 				removeChecks={deleteChecks}

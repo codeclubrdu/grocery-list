@@ -87,6 +87,18 @@ export async function checkDB(checkedItem: string, checkState: boolean) {
 	}
 }
 
+export async function setActiveStateDB(groceryObjects: groceryObject[]) {
+	for (const grocery of groceryObjects) {
+		if (grocery.active === 1) {
+			const statement = await conn.prepare('UPDATE grocerylist SET active = 1 WHERE name = (?)');
+			await statement.run([grocery.name]);
+		} else if (grocery.active === 0) {
+			const statement = await conn.prepare('UPDATE grocerylist SET active = 0 WHERE name = (?)');
+			await statement.run([grocery.name]);
+		}
+	}
+}
+
 // Non-database general use functions.  Shameful bad practice.
 export async function getUser() {
 	const cookieStore = await cookies();
