@@ -1,4 +1,3 @@
-import Form from 'next/form';
 import Link from 'next/link';
 
 export default function AddToList({
