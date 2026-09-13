@@ -59,7 +59,8 @@ export default function Home({
 		await checkDB(name, isChecked);
 	}
 
-	// Function to delete checked items from list
+	// Need to change this to function to change active to 0.
+	// Then make a function to change active to 1 on history side called "move to 'to buy' list"
 	async function deleteChecks() {
 		const keepList = list.filter((grocery) => !grocery.isChecked);
 		setList(keepList);

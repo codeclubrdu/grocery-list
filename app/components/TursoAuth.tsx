@@ -99,3 +99,8 @@ export async function getUser() {
 
 	return userName;
 }
+
+//export async function logOut() {
+//		document.cookie = 'userName=; Path=/; Max-Age=0;';
+//		window.location.replace('/');
+//	}
