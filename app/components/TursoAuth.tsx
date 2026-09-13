@@ -2,6 +2,7 @@
 
 import { connect } from '@tursodatabase/serverless';
 import { type groceryObject } from '@/app/components/TypeDefinitions';
+import { cookies } from 'next/headers';
 
 const databaseUrl = process.env.TURSO_DATABASE_URL;
 const token = process.env.TURSO_AUTH_TOKEN;
@@ -18,9 +19,11 @@ const conn = connect({
 });
 
 // Functions for grocerylist table
-export async function fullList(userName: string) {
-	const selectAll = await conn.prepare('SELECT * FROM grocerylist WHERE username = (?)');
-	const selectRows = await selectAll.all([userName]);
+export async function fullList(userName: string, activeStatus: number) {
+	const selectAll = await conn.prepare(
+		'SELECT * FROM grocerylist WHERE (username, active) = (?, ?)',
+	);
+	const selectRows = await selectAll.all([userName, activeStatus]);
 
 	const boolCorrectedRows = selectRows.map((row) => {
 		if (row.isChecked === 1) {
@@ -31,7 +34,31 @@ export async function fullList(userName: string) {
 		return row;
 	});
 
-	return boolCorrectedRows;
+	const sortedBoolCorrectedRows = boolCorrectedRows
+		.sort((a, b) => {
+			const sectionA = a.section.toUpperCase();
+			const sectionB = b.section.toUpperCase();
+			if (sectionA < sectionB) {
+				return -1;
+			}
+			if (sectionA > sectionB) {
+				return 1;
+			}
+			return 0;
+		})
+		.sort((a, b) => {
+			const storeA = a.store.toUpperCase();
+			const storeB = b.store.toUpperCase();
+			if (storeA < storeB) {
+				return -1;
+			}
+			if (storeA > storeB) {
+				return 1;
+			}
+			return 0;
+		});
+
+	return sortedBoolCorrectedRows;
 }
 
 export async function addToDB(groceryObject: groceryObject) {
@@ -60,4 +87,15 @@ export async function checkDB(checkedItem: string, checkState: boolean) {
 	}
 }
 
-// Functions for groceryhistory table
+// Non-database general use functions.  Shameful bad practice.
+export async function getUser() {
+	const cookieStore = await cookies();
+	const userName: string | undefined = cookieStore.get('userName')?.value;
+	console.log(userName);
+
+	if (!userName) {
+		throw new Error('No userName cookie!');
+	}
+
+	return userName;
+}
