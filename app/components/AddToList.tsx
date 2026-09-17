@@ -59,7 +59,25 @@ export default function AddToList({
 						name="section"
 						placeholder="Dairy"
 						className="rounded-lg border p-1"
+						list="sectionList"
 					/>
+					<datalist id="sectionList">
+						<option>Bakery</option>
+						<option>Beverages</option>
+						<option>Bread & Cereal</option>
+						<option>Canned Goods</option>
+						<option>Condiments</option>
+						<option>Dairy</option>
+						<option>Deli</option>
+						<option>Frozen</option>
+						<option>International</option>
+						<option>Meat & Seafood</option>
+						<option>Pasta & Rice</option>
+						<option>Produce</option>
+						<option>Snacks</option>
+						<option>Spices</option>
+						<option>Other</option>
+					</datalist>
 				</div>
 				<div className="flex flex-col justify-end p-2">
 					<button type="submit" className="rounded-lg border bg-gray-200 p-1">
