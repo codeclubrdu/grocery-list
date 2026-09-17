@@ -92,7 +92,7 @@ export default function Home({
 
 	return (
 		<>
-			<h1 className="m-8 text-center text-4xl font-bold tracking-tight text-gray-900">
+			<h1 className="mb-1 bg-amber-200 p-8 text-center text-4xl font-bold tracking-tight text-gray-900">
 				Grocery List
 			</h1>
 			<IntroStatement sponsor={"Carl's Jr."}></IntroStatement>
