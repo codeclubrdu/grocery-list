@@ -16,7 +16,7 @@ export default function ToBuyList({
 	storeList = storeList.filter((store, index) => storeList.indexOf(store) === index);
 
 	return (
-		<div className="flex w-full max-w-2xl min-w-0 flex-col self-center px-2">
+		<div className="flex w-full max-w-3xl min-w-0 flex-col self-center px-2">
 			<ul>
 				{
 					// For each store, list each store and for each do all the stuff below
