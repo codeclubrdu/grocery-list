@@ -12,7 +12,7 @@ export default function AddToList({
 	return (
 		// Passing in handleSubmit prop to trigger addItem function on form submission
 
-		<div className="flex flex-col">
+		<div className="mx-auto my-2 flex w-fit flex-col rounded border bg-amber-50 p-3">
 			<div className="mx-auto flex w-full max-w-2xl flex-wrap">
 				<div className="flex flex-col justify-end p-2">
 					<button type="button" onClick={setActive} className="rounded-lg border bg-gray-200 p-1">

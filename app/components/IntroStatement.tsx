@@ -2,12 +2,12 @@ import Image from 'next/image';
 
 export default function IntroStatement({ sponsor }: { sponsor: string }) {
 	return (
-		<div className="justify-items-center text-center text-gray-500">
-			<p>
+		<div className="m-2 flex flex-row justify-center gap-5 rounded bg-amber-200 p-2 text-gray-500">
+			<p className="flex flex-col justify-center">
 				Brought to you by {sponsor} <br />
 			</p>
-			<p className="mt-4">AND</p>
-			<Image src="/codeClubLogo.webp" alt="Code Club RDU logo" width={150} height={150} />
+			<p className="flex flex-col justify-center">AND</p>
+			<Image src="/codeClubLogo.png" alt="Code Club RDU logo" width={100} height={100} />
 		</div>
 	);
 }

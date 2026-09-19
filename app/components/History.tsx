@@ -1,6 +1,7 @@
 'use client';
 import ToBuyList from '@/app/components/ToBuyList';
 import ManageHistory from '@/app/components/ManageHistory';
+import IntroStatement from '@/app/components/IntroStatement';
 import { type groceryObject } from '@/app/components/TypeDefinitions';
 import { useState, type ChangeEvent } from 'react';
 import { checkDB, deleteFromDB, setActiveStateDB } from '@/app/components/TursoAuth';
@@ -70,7 +71,7 @@ export default function History({ initialList }: { initialList: groceryObject[] 
 
 	return (
 		<>
-			<h1 className="m-8 text-center text-4xl font-bold tracking-tight text-gray-900">
+			<h1 className="mx-2 mt-2 rounded bg-orange-400 p-8 text-center text-4xl font-bold tracking-tight text-gray-900">
 				Purchase History
 			</h1>
 			<ToBuyList listToRender={historyList} saveChecks={saveCheckState}></ToBuyList>
@@ -79,6 +80,7 @@ export default function History({ initialList }: { initialList: groceryObject[] 
 				logOut={logOut}
 				setActive={moveToActive}
 			></ManageHistory>
+			<IntroStatement sponsor={"Carl's Jr."}></IntroStatement>
 		</>
 	);
 }

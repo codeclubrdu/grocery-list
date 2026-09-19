@@ -24,8 +24,8 @@ export default function LogIn() {
 			<h1 className="m-8 text-center text-4xl font-bold tracking-tight text-gray-900">
 				Good Morning!
 			</h1>
-			<p className="mt-8 mb-2 text-center text-xl">Please log in with your username</p>
-			<div className="mx-auto flex w-full max-w-xl flex-wrap justify-center">
+			<p className="mt-8 mb-4 text-center text-xl">Please log in with your username</p>
+			<div className="mx-auto flex w-full max-w-xl flex-wrap justify-center rounded border bg-amber-50">
 				<Form action={getUserName} className="flex w-1/2 flex-col gap-2 p-4">
 					<label htmlFor="userName">User Name</label>
 					<input
