@@ -1,4 +1,5 @@
 'use client';
+import Navbar from '@/app/components/Navbar';
 import ToBuyList from '@/app/components/ToBuyList';
 import ManageHistory from '@/app/components/ManageHistory';
 import IntroStatement from '@/app/components/IntroStatement';
@@ -71,9 +72,7 @@ export default function History({ initialList }: { initialList: groceryObject[] 
 
 	return (
 		<>
-			<h1 className="mx-2 mt-2 rounded bg-orange-400 p-8 text-center text-4xl font-bold tracking-tight text-gray-900">
-				Purchase History
-			</h1>
+			<Navbar pageTitle={'Purchase History'}></Navbar>
 			<ToBuyList listToRender={historyList} saveChecks={saveCheckState}></ToBuyList>
 			<ManageHistory
 				removeChecks={deleteChecks}

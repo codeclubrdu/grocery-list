@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type ChangeEvent } from 'react';
+import Navbar from '@/app/components/Navbar';
 import AddToList from '@/app/components/AddToList';
 import IntroStatement from '@/app/components/IntroStatement';
 import ToBuyList from '@/app/components/ToBuyList';
@@ -92,10 +93,7 @@ export default function Home({
 
 	return (
 		<>
-			<h1 className="mx-2 mt-2 rounded bg-amber-400 p-8 text-center text-4xl font-bold tracking-tight text-gray-900">
-				Grocery List
-			</h1>
-
+			<Navbar pageTitle={'Grocery List'}></Navbar>
 			<ToBuyList listToRender={list} saveChecks={saveCheckState}></ToBuyList>
 			<AddToList
 				handleSubmit={addItem}
