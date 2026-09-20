@@ -20,22 +20,12 @@ export default function AddToList({
 					</button>
 				</div>
 				<div className="flex flex-col justify-end p-2">
-					<Link href="/main-list" className="rounded-lg border bg-gray-200 p-1">
-						Go to List Page
-					</Link>
-				</div>
-				<div className="flex flex-col justify-end p-2">
 					<button
 						type="button"
 						onClick={removeChecks}
 						className="rounded-lg border bg-gray-200 p-1"
 					>
 						Delete Checked Items
-					</button>
-				</div>
-				<div className="flex flex-col justify-end p-2">
-					<button type="button" onClick={logOut} className="rounded-lg border bg-gray-200 p-1">
-						Log Out
 					</button>
 				</div>
 			</div>

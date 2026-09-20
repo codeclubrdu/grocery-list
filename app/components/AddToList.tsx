@@ -1,15 +1,12 @@
 import Form from 'next/form';
-import Link from 'next/link';
 
 export default function AddToList({
 	handleSubmit,
 	moveChecks,
-	logOut,
 	warning,
 }: {
 	handleSubmit: (formData: FormData) => Promise<void>;
 	moveChecks: () => Promise<void>;
-	logOut: () => void;
 	warning: string;
 }) {
 	return (
@@ -91,16 +88,6 @@ export default function AddToList({
 						className="rounded-lg border bg-gray-200 p-1"
 					>
 						Clear Checked Items
-					</button>
-				</div>
-				<div className="flex flex-col justify-end p-2">
-					<Link href="/history" className="rounded-lg border bg-gray-200 p-1">
-						Go to History Page
-					</Link>
-				</div>
-				<div className="flex flex-col justify-end p-2">
-					<button formAction={logOut} type="submit" className="rounded-lg border bg-gray-200 p-1">
-						Log Out
 					</button>
 				</div>
 			</Form>

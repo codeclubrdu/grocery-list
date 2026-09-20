@@ -1,8 +1,10 @@
 'use client';
+
+import Link from 'next/link';
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
 
-export default function Navbar({ pageTitle }: { pageTitle: string }) {
+export default function Navbar({ pageTitle, logOut }: { pageTitle: string; logOut: () => void }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	return (
@@ -11,28 +13,53 @@ export default function Navbar({ pageTitle }: { pageTitle: string }) {
 				<p className="text-4xl font-bold tracking-tight text-gray-900">{pageTitle}</p>
 
 				<ul className="hidden items-center gap-12 md:flex">
-					<li className="rounded border bg-amber-50 p-3 transition hover:bg-amber-300">
+					<Link
+						href="/main-list"
+						className="rounded border bg-amber-50 p-3 transition hover:bg-amber-300"
+					>
 						Shopping List
-					</li>
-					<li className="rounded border bg-amber-50 p-3 transition hover:bg-amber-300">History</li>
-					<li className="rounded border bg-amber-50 p-3 transition hover:bg-amber-300">Log Out</li>
+					</Link>
+					<Link
+						href="/history"
+						className="rounded border bg-amber-50 p-3 transition hover:bg-amber-300"
+					>
+						History
+					</Link>
+					<button
+						onClick={logOut}
+						className="rounded border bg-amber-50 p-3 transition hover:bg-amber-300"
+					>
+						Log Out
+					</button>
 				</ul>
 
-				<Menu className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}></Menu>
+				<Menu size={40} className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}></Menu>
 
 				<div
-					className={`absolute top-24 left-0 flex w-full transform flex-col items-center gap-6 border bg-amber-50 text-lg font-semibold transition-transform md:hidden ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+					className={`absolute top-24 left-0 m-2 flex w-full transform flex-col items-center rounded bg-white text-lg font-semibold transition-transform md:hidden ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
 					style={{ transition: 'transform 0.3s ease, opacity 0.3s ease' }}
 				>
-					<li className="w-full list-none p-4 text-center transition hover:bg-amber-300">
+					<Link
+						href="/main-list"
+						className="w-full list-none p-4 text-center transition hover:bg-amber-300"
+					>
 						Shopping List
-					</li>
-					<li className="w-full list-none p-4 text-center transition hover:bg-amber-300">
+					</Link>
+
+					<Link
+						href="/history"
+						className="w-full list-none p-4 text-center transition hover:bg-amber-300"
+					>
 						History
-					</li>
-					<li className="w-full list-none p-4 text-center transition hover:bg-amber-300">
+					</Link>
+
+					<button
+						onClick={logOut}
+						type="submit"
+						className="w-full list-none p-4 text-center transition hover:bg-amber-300"
+					>
 						Log Out
-					</li>
+					</button>
 				</div>
 			</header>
 		</>
