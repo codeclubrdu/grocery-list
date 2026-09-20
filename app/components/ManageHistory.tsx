@@ -1,9 +1,6 @@
-import Link from 'next/link';
-
 export default function AddToList({
 	setActive,
 	removeChecks,
-	logOut,
 }: {
 	setActive: () => Promise<void>;
 	removeChecks: () => Promise<void>;
