@@ -3,6 +3,7 @@
 import { connect } from '@tursodatabase/serverless';
 import { type groceryObject } from '@/app/components/TypeDefinitions';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 const databaseUrl = process.env.TURSO_DATABASE_URL;
 const token = process.env.TURSO_AUTH_TOKEN;
@@ -103,7 +104,7 @@ export async function getUser() {
 	console.log(userName);
 
 	if (!userName) {
-		throw new Error('No userName cookie!');
+		redirect('/');
 	}
 
 	return userName;
