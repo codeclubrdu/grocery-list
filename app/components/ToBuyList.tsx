@@ -25,7 +25,7 @@ export default function ToBuyList({
 						const perStoreList = listToRender.filter((grocery) => grocery.store === store);
 
 						return (
-							<div className="my-3 rounded border bg-amber-50 p-3" key={store}>
+							<div className="my-3 rounded-3xl bg-white px-6 py-4 shadow" key={store}>
 								<p className="mb-2 text-2xl font-bold">{store}</p>
 								<ul>
 									{
