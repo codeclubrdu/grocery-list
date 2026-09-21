@@ -16,7 +16,7 @@ export default function ToBuyList({
 	storeList = storeList.filter((store, index) => storeList.indexOf(store) === index);
 
 	return (
-		<div className="mb-10 flex w-fit flex-col self-center">
+		<div className="flex w-full max-w-3xl min-w-0 flex-col self-center px-2">
 			<ul>
 				{
 					// For each store, list each store and for each do all the stuff below
@@ -25,8 +25,8 @@ export default function ToBuyList({
 						const perStoreList = listToRender.filter((grocery) => grocery.store === store);
 
 						return (
-							<div key={store}>
-								<p className="mt-8 mb-2 text-2xl font-bold">{store}</p>
+							<div className="my-3 rounded-3xl bg-white px-6 py-4 shadow" key={store}>
+								<p className="mb-2 text-2xl font-bold">{store}</p>
 								<ul>
 									{
 										// List items under their coresponding stores
@@ -42,7 +42,7 @@ export default function ToBuyList({
 												<li className="flex text-xl" key={listItem.name}>
 													<div className="flex gap-x-4 sm:col-span-2">
 														<div className="flex items-center">
-															<div className="group relative inline-flex w-8 shrink-0 rounded-full bg-gray-200 p-px inset-ring inset-ring-gray-900/5 outline-offset-2 outline-indigo-600 transition-colors duration-200 ease-in-out has-checked:bg-indigo-600 has-focus-visible:outline-2">
+															<div className="group relative inline-flex w-8 shrink-0 rounded-full bg-gray-200 p-px inset-ring inset-ring-gray-900/5 outline-offset-2 outline-indigo-600 transition-colors duration-200 ease-in-out has-checked:bg-green-600 has-focus-visible:outline-2">
 																<span className="size-4 rounded-full bg-white shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out group-has-checked:translate-x-3.5"></span>
 																<input
 																	id={listItem.name}

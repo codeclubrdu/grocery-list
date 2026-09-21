@@ -1,12 +1,12 @@
-import Home from '@/app/components/Home';
+import History from '@/app/components/History';
 import { fullList, getUser } from '@/app/components/TursoAuth';
 
 export default async function Page() {
 	const userName = await getUser();
 
-	const activeStatus: number = 1;
+	const activeStatus: number = 0;
 
 	const groceryDB = await fullList(userName, activeStatus);
 
-	return <Home initialList={groceryDB} userName={userName}></Home>;
+	return <History initialList={groceryDB}></History>;
 }

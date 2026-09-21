@@ -2,6 +2,8 @@
 
 import { connect } from '@tursodatabase/serverless';
 import { type groceryObject } from '@/app/components/TypeDefinitions';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 const databaseUrl = process.env.TURSO_DATABASE_URL;
 const token = process.env.TURSO_AUTH_TOKEN;
@@ -17,9 +19,12 @@ const conn = connect({
 	authToken: token,
 });
 
-export async function fullList() {
-	const selectAll = await conn.prepare('SELECT * FROM grocerylist');
-	const selectRows = await selectAll.all();
+// Functions for grocerylist table
+export async function fullList(userName: string, activeStatus: number) {
+	const selectAll = await conn.prepare(
+		'SELECT * FROM grocerylist WHERE (username, active) = (?, ?)',
+	);
+	const selectRows = await selectAll.all([userName, activeStatus]);
 
 	const boolCorrectedRows = selectRows.map((row) => {
 		if (row.isChecked === 1) {
@@ -30,16 +35,40 @@ export async function fullList() {
 		return row;
 	});
 
-	return boolCorrectedRows;
+	const sortedBoolCorrectedRows = boolCorrectedRows
+		.sort((a, b) => {
+			const sectionA = a.section.toUpperCase();
+			const sectionB = b.section.toUpperCase();
+			if (sectionA < sectionB) {
+				return -1;
+			}
+			if (sectionA > sectionB) {
+				return 1;
+			}
+			return 0;
+		})
+		.sort((a, b) => {
+			const storeA = a.store.toUpperCase();
+			const storeB = b.store.toUpperCase();
+			if (storeA < storeB) {
+				return -1;
+			}
+			if (storeA > storeB) {
+				return 1;
+			}
+			return 0;
+		});
+
+	return sortedBoolCorrectedRows;
 }
 
 export async function addToDB(groceryObject: groceryObject) {
-	const { name, quantity, section, store, isChecked } = groceryObject;
+	const { name, quantity, section, store, isChecked, userName, active } = groceryObject;
 
 	const addObject = await conn.prepare(
-		'INSERT INTO grocerylist (name, quantity, section, store, ischecked) VALUES (?, ?, ?, ?, ?)',
+		'INSERT INTO grocerylist (name, quantity, section, store, ischecked, username, active) VALUES (?, ?, ?, ?, ?, ?, ?)',
 	);
-	await addObject.run([name, quantity, section, store, isChecked]);
+	await addObject.run([name, quantity, section, store, isChecked, userName, active]);
 }
 
 export async function deleteFromDB(groceryObjects: groceryObject[]) {
@@ -57,4 +86,26 @@ export async function checkDB(checkedItem: string, checkState: boolean) {
 		const checkObject = await conn.prepare('UPDATE grocerylist SET isChecked = 0 WHERE name = (?)');
 		await checkObject.run([checkedItem]);
 	}
+}
+
+export async function setActiveStateDB(groceryObjects: groceryObject[]) {
+	for (const grocery of groceryObjects) {
+		if (grocery.active === 1 || grocery.active === 0) {
+			const statement = await conn.prepare('UPDATE grocerylist SET active = ? WHERE name = ?');
+			await statement.run([grocery.active, grocery.name]);
+		}
+	}
+}
+
+// Non-database general use functions.  Shameful bad practice.
+export async function getUser() {
+	const cookieStore = await cookies();
+	const userName: string | undefined = cookieStore.get('userName')?.value;
+	console.log(userName);
+
+	if (!userName) {
+		redirect('/');
+	}
+
+	return userName;
 }
