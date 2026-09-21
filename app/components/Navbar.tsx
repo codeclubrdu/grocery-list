@@ -8,12 +8,12 @@ export default function Navbar({ pageTitle, logOut }: { pageTitle: string; logOu
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const buttonFormat =
-		'rounded-lg font-bold bg-amber-600 text-white px-3 py-2 transition hover:bg-amber-700 hover:shadow-md hover:shadow-black/25 ';
+		'rounded-lg font-bold bg-amber-600 text-white px-3 py-2 transition hover:bg-amber-700 hover:shadow-md hover:shadow-black/25';
 
 	return (
-		<div className="bg-amber-200 drop-shadow">
-			<header className="mx-auto flex w-full max-w-188 items-center justify-between rounded bg-amber-200 px-4 py-6 text-black">
-				<p className="text-4xl font-bold tracking-tight text-gray-900">{pageTitle}</p>
+		<div className="bg-lime-700 drop-shadow">
+			<header className="mx-auto flex w-full max-w-188 items-center justify-between rounded bg-lime-700 px-4 py-6 text-black">
+				<p className="text-4xl font-bold tracking-tight text-white">{pageTitle}</p>
 
 				<ul className="hidden items-center gap-8 md:flex">
 					<Link href="/main-list" className={buttonFormat}>
@@ -29,7 +29,7 @@ export default function Navbar({ pageTitle, logOut }: { pageTitle: string; logOu
 
 				<Menu
 					size={40}
-					className="me-6 md:hidden"
+					className="me-6 hover:shadow-md hover:shadow-black/25 md:hidden"
 					onClick={() => setIsMenuOpen(!isMenuOpen)}
 				></Menu>
 

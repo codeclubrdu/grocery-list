@@ -21,12 +21,12 @@ export default function LogIn() {
 
 	return (
 		<div>
-			<h1 className="bg-amber-200 py-6 text-center text-4xl font-bold tracking-tight text-gray-900 drop-shadow">
+			<h1 className="bg-lime-700 py-6 text-center text-4xl font-bold tracking-tight text-white drop-shadow">
 				Good Morning!
 			</h1>
 			<p className="mx-4 my-8 text-center text-xl">Please log in with your username</p>
 			<div className="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-2">
-				<div className="flex flex-wrap justify-center rounded-3xl bg-amber-50 shadow">
+				<div className="flex flex-wrap justify-center rounded-3xl bg-lime-200 shadow">
 					<Form action={getUserName} className="flex w-full max-w-xs flex-col gap-2 p-4">
 						<label htmlFor="userName">Username</label>
 						<input
@@ -36,7 +36,10 @@ export default function LogIn() {
 							placeholder="username"
 							className="rounded-lg border bg-white p-1"
 						/>
-						<button type="submit" className="rounded-lg border bg-gray-200 p-1">
+						<button
+							type="submit"
+							className="rounded-lg bg-lime-600 px-3 py-2 font-medium text-white hover:bg-lime-700 hover:shadow-md hover:shadow-black/25"
+						>
 							Submit
 						</button>
 					</Form>
